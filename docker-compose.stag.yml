@@ -1,0 +1,19 @@
+services:
+  backend:
+    # Build configuration for the "backend" service:
+    # - 'context: .' tells Docker to use the current directory as the build context
+    # - 'dockerfile: Dockerfile' specifies the file to use for building the image
+    environment:
+      - ENVIRONMENT=staging
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+
+    volumes:
+      - ./src:/app/src:rw
+      - ./config:/app/config:rw
+
+    # Maps the container port 8000 to the host machine port defined by APP_PORT
+    # If APP_PORT is not set, it defaults to 8000
+    ports:
+      - "${APP_PORT:-8000}:8000"

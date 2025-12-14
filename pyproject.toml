@@ -1,0 +1,33 @@
+[project]
+name = "python-template-service"
+version = "1.0.0"
+description = "A FastAPI-based microservices integrated with AWS boto3 client in different environments."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "boto3>=1.42.9",
+    "fastapi[standard]>=0.116.1",
+    "pydantic-settings>=2.10.1",
+]
+
+[tool.poetry.scripts]
+package-mode = false
+
+[tool.taskipy.tasks]
+setup-db = "PYTHONPATH=src uv run -m  common.databases.dynamoDB.setup"
+mock-student-teacher-relationships-table = "PYTHONPATH=src uv run -m  common.databases.dynamoDB.fixtures.mock_student_teacher_relationships"
+
+[tool.pyright]
+exclude = [".venv"]
+pythonVersion = "3.12"
+venvPath = "."
+venv = ".venv"
+
+[dependency-groups]
+dev = [
+    "faker>=37.6.0",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "ruff>=0.12.11",
+    "taskipy>=1.14.1",
+]
